@@ -3,7 +3,7 @@ const GRID_SIZE = 2;
 let canvs = [];
 
 function drawRandom(pg) {
-  pg.background(220, 20, 120);
+  pg.background(250, 50, 150);
   pg.stroke(0);
   pg.fill(255);
 
@@ -17,7 +17,7 @@ function drawRandom(pg) {
 }
 
 function drawGaussian(pg) {
-  pg.background(220, 20, 120);
+  pg.background(250, 50, 150);
   pg.stroke(0);
   pg.fill(255);
 
@@ -31,7 +31,7 @@ function drawGaussian(pg) {
 }
 
 function drawNoise(pg) {
-  pg.background(220, 20, 120);
+  pg.background(250, 50, 150);
   pg.stroke(0);
   pg.fill(255);
 
