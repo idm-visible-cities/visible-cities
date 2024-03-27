@@ -4,9 +4,9 @@ let COLORS = [];
 
 function setup() {
   // createCanvas(windowWidth, windowHeight);
-  createCanvas(600, 600);
+  createCanvas(600, windowHeight);
   noLoop();
-  noiseDetail(6, 0.4);
+  noiseDetail(2, 0.5);
 
   COLORS = [
     color("navy"),
@@ -29,11 +29,8 @@ function draw() {
       let ci = floor(noise_val);
 
       let c0 = COLORS[ci];
-      let c1 = (ci < COLORS.length - 1) ? COLORS[ci + 1] : COLORS[ci];
 
-      let c = lerpColor(c0, c1, noise_val - ci)
-
-      fill(c);
+      fill(c0);
       rect(x, y, GRID_SIZE, GRID_SIZE);
     }
   }

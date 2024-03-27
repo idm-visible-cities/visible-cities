@@ -1,20 +1,66 @@
 const GRID_SIZE = 2;
 
+let canvs = [];
+
+function drawRandom(pg) {
+  pg.background(220, 20, 120);
+  pg.stroke(0);
+  pg.fill(255);
+
+  let x = pg.width / 2;
+  let y = pg.height / 2;
+  for (let i = 0; i < 512; i++) {
+    pg.ellipse(x, y, 30);
+    x += random(-pg.width / 50, pg.width / 50);
+    y += random(-pg.height / 50, pg.height / 50);
+  }
+}
+
+function drawGaussian(pg) {
+  pg.background(220, 20, 120);
+  pg.stroke(0);
+  pg.fill(255);
+
+  let x = pg.width / 2;
+  let y = pg.height / 2;
+  for (let i = 0; i < 512; i++) {
+    x += randomGaussian(0, pg.width / 50);
+    y += randomGaussian(0, pg.height / 50);
+    pg.ellipse(x, y, 30);
+  }
+}
+
+function drawNoise(pg) {
+  pg.background(220, 20, 120);
+  pg.stroke(0);
+  pg.fill(255);
+
+  let x = pg.width / 2;
+  let y = pg.height / 2;
+  for (let i = 0; i < 512; i++) {
+    x += map(noise(i / 10, PI), 0, 1, -pg.width / 50, pg.width / 50);
+    y += map(noise(i / 10, TWO_PI), 0, 1, -pg.height / 50, pg.height / 50);
+    pg.ellipse(x, y, 30);
+  }
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noLoop();
-  noiseDetail(8, 0.5);
+
+  for (let i = 0; i < 3; i++) {
+    canvs.push(createGraphics(width / 3, height));
+  }
+
+  drawRandom(canvs[0]);
+  drawGaussian(canvs[1]);
+  drawNoise(canvs[2]);
 }
 
 function draw() {
   background(255);
-  noStroke();
 
-  for (let y = 0; y < height; y+=GRID_SIZE) {
-    for (let x = 0; x < width; x+=GRID_SIZE) {
-      let c = 255 * noise(x / 100, y / 100);
-      fill(c);
-      rect(x, y, GRID_SIZE, GRID_SIZE);
-    }
+  for (let i = 0; i < 3; i++) {
+    image(canvs[i], i * canvs[i].width, 0);
   }
 }
