@@ -46,6 +46,7 @@ function collapse(aGridy) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noLoop();
+  noStroke();
 
   for (let y = 0; y < height; y += GRID_SIZE) {
     for (let x = 0; x < width; x += GRID_SIZE) {
@@ -56,7 +57,6 @@ function setup() {
 
 function draw() {
   background(250, 50, 150);
-  noStroke();
 
   const byPossibilities = grid.toSorted((a, b) => a.possibilities.length - b.possibilities.length);
   const candidates = byPossibilities.filter((p) => p.possibilities.length > 1);
