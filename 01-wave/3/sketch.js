@@ -1,6 +1,6 @@
 const GRID_SIZE = 200;
-const TILE_POSSIBILITIES = TILES.map((_, i) => i);
-const GRID_POSSIBILITIES = [];
+
+const grid = [];
 
 function toI(x, y) {
   const x_count = ceil(width / GRID_SIZE);
@@ -9,37 +9,38 @@ function toI(x, y) {
   return y_p * x_count + x_p;
 }
 
-function collapse(mGridElement) {
-  const mGridPossibilities = mGridElement.possibilities;
-  const mX = mGridElement.x;
-  const mY = mGridElement.y;
+function updateGridElement(aGridy) {
+  const mX = aGridy.x;
+  const mY = aGridy.y;
 
-  const mTile = random(mGridPossibilities)
-  mGridElement.possibilities = [mTile];
+  for (let p = 0; p < aGridy.possibilities.length; p++) {
+    const mTile = aGridy.possibilities[p];
 
-  // update RIGHT
-  if (mX + GRID_SIZE < width) {
-    const mNeighbor = GRID_POSSIBILITIES[toI(mX + GRID_SIZE, mY)];
-    mNeighbor.possibilities = mNeighbor.possibilities.filter((p) => TILES[p].allowLeft(mTile));
+    // update RIGHT
+    if (mX + GRID_SIZE < width) {
+      grid[toI(mX + GRID_SIZE, mY)].updateFromLeft(mTile);
+    }
+
+    // update BOTTOM
+    if (mY + GRID_SIZE < height) {
+      grid[toI(mX, mY + GRID_SIZE)].updateFromTop(mTile);
+    }
+
+    // update LEFT
+    if (mX > GRID_SIZE) {
+      grid[toI(mX - GRID_SIZE, mY)].updateFromRight(mTile);
+    }
+
+    // update TOP
+    if (mY > GRID_SIZE) {
+      grid[toI(mX, mY - GRID_SIZE)].updateFromBottom(mTile);
+    }
   }
+}
 
-  // update BOTTOM
-  if (mY + GRID_SIZE < height) {
-    const mNeighbor = GRID_POSSIBILITIES[toI(mX, mY + GRID_SIZE)];
-    mNeighbor.possibilities = mNeighbor.possibilities.filter((p) => TILES[p].allowTop(mTile));
-  }
-
-  // update LEFT
-  if (mX > GRID_SIZE) {
-    const mNeighbor = GRID_POSSIBILITIES[toI(mX - GRID_SIZE, mY)];
-    mNeighbor.possibilities = mNeighbor.possibilities.filter((p) => TILES[p].allowRight(mTile));
-  }
-
-  // update TOP
-  if (mY > GRID_SIZE) {
-    const mNeighbor = GRID_POSSIBILITIES[toI(mX, mY - GRID_SIZE)];
-    mNeighbor.possibilities = mNeighbor.possibilities.filter((p) => TILES[p].allowBottom(mTile));
-  }
+function collapse(aGridy) {
+  aGridy.possibilities = [random(aGridy.possibilities)];
+  updateGridElement(aGridy);
 }
 
 function setup() {
@@ -48,11 +49,7 @@ function setup() {
 
   for (let y = 0; y < height; y += GRID_SIZE) {
     for (let x = 0; x < width; x += GRID_SIZE) {
-      GRID_POSSIBILITIES.push({
-        x: x,
-        y: y,
-        possibilities: TILE_POSSIBILITIES.slice(),
-      });
+      grid.push(new Gridy(x, y));
     }
   }
 }
@@ -61,24 +58,20 @@ function draw() {
   background(250, 50, 150);
   noStroke();
 
-  const byPossibilities = GRID_POSSIBILITIES.toSorted((a, b) => a.possibilities.length - b.possibilities.length);
+  const byPossibilities = grid.toSorted((a, b) => a.possibilities.length - b.possibilities.length);
   const candidates = byPossibilities.filter((p) => p.possibilities.length > 1);
 
   if (candidates.length > 0) {
     const candidate = candidates[0];
     print("collapsing", toI(candidate.x, candidate.y));
-    collapse(GRID_POSSIBILITIES[toI(candidate.x, candidate.y)]);
+    collapse(grid[toI(candidate.x, candidate.y)]);
   }
 
-  for (let i = 0; i < GRID_POSSIBILITIES.length; i++) {
-    const mGridElement = GRID_POSSIBILITIES[i];
-    const mGridPossibilities = mGridElement.possibilities;
-    let mTile = TILES[mGridPossibilities[0]];
-
-    if (mGridPossibilities.length > 1) {
-      mTile = TILES[random(mGridPossibilities)];
-    }
-    mTile.draw(mGridElement.x, mGridElement.y, GRID_SIZE);
+  for (let i = 0; i < grid.length; i++) {
+    const mGridy = grid[i];
+    let mTile = TILES[mGridy.possibilities[0]];
+    mTile.draw(mGridy.x, mGridy.y, GRID_SIZE);
+    text(i + ": " + mGridy.possibilities, mGridy.x, mGridy.y, GRID_SIZE, GRID_SIZE);
   }
 }
 

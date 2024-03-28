@@ -31,3 +31,5 @@ const TILES = [
   new Tile(quarter(180), []),
   new Tile(quarter(270), []),
 ];
+
+const ALL_TILE_IDXS = TILES.map((_, i) => i);
