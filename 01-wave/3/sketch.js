@@ -1,4 +1,4 @@
-const GRID_SIZE = 200;
+const GRID_SIZE = 100;
 let NUM_COLS;
 let NUM_ROWS;
 
