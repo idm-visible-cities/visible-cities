@@ -18,16 +18,21 @@ class Tile {
   }
 }
 
-function empty(x, y, w, h = 0) {}
+function empty(xi, yi, w, h = 0) {}
 
-function full(x, y, w, h = 0) {
+function full(xi, yi, w, h = 0) {
   h = h || w;
+  const x = xi * w;
+  const y = yi * h;
   rect(x, y, w, h);
 }
 
 function quarter(a) {
-  return function (x, y, w, h = 0) {
+  return function (xi, yi, w, h = 0) {
     h = h || w;
+    const x = xi * w;
+    const y = yi * h;
+
     push();
     translate(x + w / 2, y + h / 2);
     rotate(radians(a));

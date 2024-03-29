@@ -1,14 +1,13 @@
 const GRID_SIZE = 50;
+let NUM_COLS;
+let NUM_ROWS;
 
 const grid = [];
 const updateQueue = [];
 let hasUpdated = {};
 
-function toI(x, y) {
-  const x_count = ceil(width / GRID_SIZE);
-  const x_p = floor(x / GRID_SIZE);
-  const y_p = floor(y / GRID_SIZE);
-  return y_p * x_count + x_p;
+function toI(xi, yi) {
+  return yi * NUM_COLS + xi;
 }
 
 function addToQueue(idx) {
@@ -19,33 +18,33 @@ function addToQueue(idx) {
 }
 
 function updateGridElement(aGridy) {
-  const mX = aGridy.x;
-  const mY = aGridy.y;
+  const mX = aGridy.xi;
+  const mY = aGridy.yi;
 
   // update RIGHT
-  if (mX + GRID_SIZE < width) {
-    const rIdx = toI(mX + GRID_SIZE, mY);
+  if (mX + 1 < NUM_COLS) {
+    const rIdx = toI(mX + 1, mY);
     grid[rIdx].updateFromLeft(aGridy.possibilities);
     addToQueue(rIdx);
   }
 
   // update BOTTOM
-  if (mY + GRID_SIZE < height) {
-    const bIdx = toI(mX, mY + GRID_SIZE);
+  if (mY + 1 < NUM_ROWS) {
+    const bIdx = toI(mX, mY + 1);
     grid[bIdx].updateFromTop(aGridy.possibilities);
     addToQueue(bIdx);
   }
 
   // update LEFT
-  if (mX > GRID_SIZE) {
-    const lIdx = toI(mX - GRID_SIZE, mY);
+  if (mX > 1) {
+    const lIdx = toI(mX - 1, mY);
     grid[lIdx].updateFromRight(aGridy.possibilities);
     addToQueue(lIdx);
   }
 
   // update TOP
-  if (mY > GRID_SIZE) {
-    const tIdx = toI(mX, mY - GRID_SIZE);
+  if (mY > 1) {
+    const tIdx = toI(mX, mY - 1);
     grid[tIdx].updateFromBottom(aGridy.possibilities);
     addToQueue(tIdx);
   }
@@ -57,12 +56,15 @@ function collapse(aGridy) {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  NUM_COLS = ceil(width / GRID_SIZE);
+  NUM_ROWS = ceil(height / GRID_SIZE);
+
   // noLoop();
   noStroke();
 
-  for (let y = 0; y < height; y += GRID_SIZE) {
-    for (let x = 0; x < width; x += GRID_SIZE) {
-      grid.push(new Gridy(x, y));
+  for (let yi = 0; yi < NUM_ROWS; yi++) {
+    for (let xi = 0; xi < NUM_COLS; xi++) {
+      grid.push(new Gridy(xi, yi, grid.length));
     }
   }
 }
@@ -75,13 +77,11 @@ function draw() {
 
   if (candidates.length > 0) {
     const candidate = candidates[0];
-    const candidateIdx = toI(candidate.x, candidate.y);
+    print("collapsing", candidate.i);
+    collapse(grid[candidate.i]);
 
-    print("collapsing", candidateIdx);
-    collapse(grid[candidateIdx]);
-
-    updateQueue.push(candidateIdx);
-    hasUpdated[candidateIdx] = candidateIdx;
+    updateQueue.push(candidate.i);
+    hasUpdated[candidate.i] = candidate.i;
   } else {
     noLoop();
   }
@@ -95,7 +95,7 @@ function draw() {
   for (let i = 0; i < grid.length; i++) {
     const mGridy = grid[i];
     let mTile = TILES[mGridy.possibilities[0]];
-    mTile.draw(mGridy.x, mGridy.y, GRID_SIZE);
+    mTile.draw(mGridy.xi, mGridy.yi, GRID_SIZE);
   }
 }
 

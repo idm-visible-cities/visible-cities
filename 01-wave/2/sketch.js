@@ -1,15 +1,20 @@
 const GRID_SIZE = 100;
+let NUM_COLS;
+let NUM_ROWS;
 
 const grid = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  NUM_COLS = ceil(width / GRID_SIZE);
+  NUM_ROWS = ceil(height / GRID_SIZE);
+
   noLoop();
   noStroke();
 
-  for (let y = 0; y < height; y += GRID_SIZE) {
-    for (let x = 0; x < width; x += GRID_SIZE) {
-      grid.push(new Gridy(x,y));
+  for (let yi = 0; yi < NUM_ROWS; yi++) {
+    for (let xi = 0; xi < NUM_COLS; xi++) {
+      grid.push(new Gridy(xi, yi, grid.length));
     }
   }
 }
@@ -20,7 +25,7 @@ function draw() {
   for (let i = 0; i < grid.length; i++) {
     const mGridy = grid[i];
     let mTile = TILES[mGridy.possibilities[0]];
-    mTile.draw(mGridy.x, mGridy.y, GRID_SIZE);
-    text(i + ": " + mGridy.possibilities, mGridy.x, mGridy.y, GRID_SIZE, GRID_SIZE);
+    mTile.draw(mGridy.xi, mGridy.yi, GRID_SIZE);
+    mGridy.debug(GRID_SIZE);
   }
 }

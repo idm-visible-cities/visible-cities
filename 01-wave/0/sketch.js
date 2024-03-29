@@ -1,4 +1,6 @@
 const GRID_SIZE = 100;
+let NUM_COLS;
+let NUM_ROWS;
 
 function quarter(x, y, w, h = 0) {
   h = h || w;
@@ -7,6 +9,9 @@ function quarter(x, y, w, h = 0) {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  NUM_COLS = ceil(width / GRID_SIZE);
+  NUM_ROWS = ceil(height / GRID_SIZE);
+
   noLoop();
   noStroke();
 }
@@ -14,8 +19,11 @@ function setup() {
 function draw() {
   background(250, 50, 150);
 
-  for (let y = 0; y < height; y += GRID_SIZE) {
-    for (let x = 0; x < width; x += GRID_SIZE) {
+  for (let yi = 0; yi < NUM_ROWS; yi++) {
+    const y = yi * GRID_SIZE;
+    for (let xi = 0; xi < NUM_COLS; xi++) {
+      const x = xi * GRID_SIZE;
+
       push();
       translate(x + GRID_SIZE / 2, y + GRID_SIZE / 2);
       rotate(radians(0));
