@@ -13,28 +13,26 @@ function updateGridElement(aGridy) {
   const mX = aGridy.x;
   const mY = aGridy.y;
 
-  for (let p = 0; p < aGridy.possibilities.length; p++) {
-    const tileIdx = aGridy.possibilities[p];
+  const tileIdx = aGridy.possibilities[0];
 
-    // update RIGHT
-    if (mX + GRID_SIZE < width) {
-      grid[toI(mX + GRID_SIZE, mY)].updateFromLeft(tileIdx);
-    }
+  // update RIGHT
+  if (mX + GRID_SIZE < width) {
+    grid[toI(mX + GRID_SIZE, mY)].updateFromLeft(tileIdx);
+  }
 
-    // update BOTTOM
-    if (mY + GRID_SIZE < height) {
-      grid[toI(mX, mY + GRID_SIZE)].updateFromTop(tileIdx);
-    }
+  // update BOTTOM
+  if (mY + GRID_SIZE < height) {
+    grid[toI(mX, mY + GRID_SIZE)].updateFromTop(tileIdx);
+  }
 
-    // update LEFT
-    if (mX > GRID_SIZE) {
-      grid[toI(mX - GRID_SIZE, mY)].updateFromRight(tileIdx);
-    }
+  // update LEFT
+  if (mX > GRID_SIZE) {
+    grid[toI(mX - GRID_SIZE, mY)].updateFromRight(tileIdx);
+  }
 
-    // update TOP
-    if (mY > GRID_SIZE) {
-      grid[toI(mX, mY - GRID_SIZE)].updateFromBottom(tileIdx);
-    }
+  // update TOP
+  if (mY > GRID_SIZE) {
+    grid[toI(mX, mY - GRID_SIZE)].updateFromBottom(tileIdx);
   }
 }
 
@@ -63,8 +61,9 @@ function draw() {
 
   if (candidates.length > 0) {
     const candidate = candidates[0];
-    print("collapsing", toI(candidate.x, candidate.y));
-    collapse(grid[toI(candidate.x, candidate.y)]);
+    const candidateIdx = toI(candidate.x, candidate.y);
+    print("collapsing", candidateIdx);
+    collapse(grid[candidateIdx]);
   } else {
     noLoop();
   }

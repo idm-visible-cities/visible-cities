@@ -13,28 +13,26 @@ function updateGridElement(aGridy) {
   const mX = aGridy.x;
   const mY = aGridy.y;
 
-  for (let p = 0; p < aGridy.possibilities.length; p++) {
-    const mTile = aGridy.possibilities[p];
+  const tileIdx = aGridy.possibilities[0];
 
-    // update RIGHT
-    if (mX + GRID_SIZE < width) {
-      grid[toI(mX + GRID_SIZE, mY)].updateFromLeft(mTile);
-    }
+  // update RIGHT
+  if (mX + GRID_SIZE < width) {
+    grid[toI(mX + GRID_SIZE, mY)].updateFromLeft(tileIdx);
+  }
 
-    // update BOTTOM
-    if (mY + GRID_SIZE < height) {
-      grid[toI(mX, mY + GRID_SIZE)].updateFromTop(mTile);
-    }
+  // update BOTTOM
+  if (mY + GRID_SIZE < height) {
+    grid[toI(mX, mY + GRID_SIZE)].updateFromTop(tileIdx);
+  }
 
-    // update LEFT
-    if (mX > GRID_SIZE) {
-      grid[toI(mX - GRID_SIZE, mY)].updateFromRight(mTile);
-    }
+  // update LEFT
+  if (mX > GRID_SIZE) {
+    grid[toI(mX - GRID_SIZE, mY)].updateFromRight(tileIdx);
+  }
 
-    // update TOP
-    if (mY > GRID_SIZE) {
-      grid[toI(mX, mY - GRID_SIZE)].updateFromBottom(mTile);
-    }
+  // update TOP
+  if (mY > GRID_SIZE) {
+    grid[toI(mX, mY - GRID_SIZE)].updateFromBottom(tileIdx);
   }
 }
 
