@@ -10,8 +10,10 @@ function toI(xi, yi) {
   return yi * NUM_COLS + xi;
 }
 
-function addToQueue(idx) {
-  if (!(idx in hasUpdated)) {
+function addToQueue(idx, oSize = -1) {
+  const changed = (oSize == -1) || grid[idx].possibilities.length < oSize;
+
+  if (!(idx in hasUpdated) && changed) {
     updateQueue.push(idx);
     hasUpdated[idx] = idx;
   }
@@ -23,30 +25,34 @@ function updateGridElement(aGridy) {
 
   // update RIGHT
   if (mX + 1 < NUM_COLS) {
-    const rIdx = toI(mX + 1, mY);
-    grid[rIdx].updateFromLeft(aGridy.possibilities);
-    addToQueue(rIdx);
+    const gIdx = toI(mX + 1, mY);
+    const oSize = grid[gIdx].possibilities.length;
+    grid[gIdx].updateFromLeft(aGridy.possibilities);
+    addToQueue(gIdx, oSize);
   }
 
   // update BOTTOM
   if (mY + 1 < NUM_ROWS) {
-    const bIdx = toI(mX, mY + 1);
-    grid[bIdx].updateFromTop(aGridy.possibilities);
-    addToQueue(bIdx);
+    const gIdx = toI(mX, mY + 1);
+    const oSize = grid[gIdx].possibilities.length;
+    grid[gIdx].updateFromTop(aGridy.possibilities);
+    addToQueue(gIdx, oSize);
   }
 
   // update LEFT
   if (mX > 0) {
-    const lIdx = toI(mX - 1, mY);
-    grid[lIdx].updateFromRight(aGridy.possibilities);
-    addToQueue(lIdx);
+    const gIdx = toI(mX - 1, mY);
+    const oSize = grid[gIdx].possibilities.length;
+    grid[gIdx].updateFromRight(aGridy.possibilities);
+    addToQueue(gIdx, oSize);
   }
 
   // update TOP
   if (mY > 0) {
-    const tIdx = toI(mX, mY - 1);
-    grid[tIdx].updateFromBottom(aGridy.possibilities);
-    addToQueue(tIdx);
+    const gIdx = toI(mX, mY - 1);
+    const oSize = grid[gIdx].possibilities.length;
+    grid[gIdx].updateFromBottom(aGridy.possibilities);
+    addToQueue(gIdx, oSize);
   }
 }
 
