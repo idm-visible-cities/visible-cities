@@ -36,14 +36,14 @@ function updateGridElement(aGridy) {
   }
 
   // update LEFT
-  if (mX > 1) {
+  if (mX > 0) {
     const lIdx = toI(mX - 1, mY);
     grid[lIdx].updateFromRight(aGridy.possibilities);
     addToQueue(lIdx);
   }
 
   // update TOP
-  if (mY > 1) {
+  if (mY > 0) {
     const tIdx = toI(mX, mY - 1);
     grid[tIdx].updateFromBottom(aGridy.possibilities);
     addToQueue(tIdx);

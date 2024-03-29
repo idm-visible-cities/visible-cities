@@ -25,12 +25,12 @@ function updateGridElement(aGridy) {
   }
 
   // update LEFT
-  if (mX > 1) {
+  if (mX > 0) {
     grid[toI(mX - 1, mY)].updateFromRight(tileIdx);
   }
 
   // update TOP
-  if (mY > 1) {
+  if (mY > 0) {
     grid[toI(mX, mY - 1)].updateFromBottom(tileIdx);
   }
 }
