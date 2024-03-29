@@ -5,19 +5,39 @@ class Gridy {
     this.possibilities = ALL_TILE_IDXS.slice();
   }
 
-  updateFromRight(tileIdx) {
-    this.possibilities = this.possibilities.filter((p) => TILES[p].allowRight(tileIdx));
+  updateFromRight(tileIdxs) {
+    let newPossibilities = new Set([]);
+    for (let ti = 0; ti < tileIdxs.length; ti++) {
+      const allowed = this.possibilities.filter((p) => TILES[p].allowRight(tileIdxs[ti]));
+      newPossibilities = newPossibilities.union(new Set(allowed));
+    }
+    this.possibilities = Array.from(newPossibilities);
   }
 
-  updateFromBottom(tileIdx) {
-    this.possibilities = this.possibilities.filter((p) => TILES[p].allowBottom(tileIdx));
+  updateFromBottom(tileIdxs) {
+    let newPossibilities = new Set([]);
+    for (let ti = 0; ti < tileIdxs.length; ti++) {
+      const allowed = this.possibilities.filter((p) => TILES[p].allowBottom(tileIdxs[ti]));
+      newPossibilities = newPossibilities.union(new Set(allowed));
+    }
+    this.possibilities = Array.from(newPossibilities);
   }
 
-  updateFromLeft(tileIdx) {
-    this.possibilities = this.possibilities.filter((p) => TILES[p].allowLeft(tileIdx));
+  updateFromLeft(tileIdxs) {
+    let newPossibilities = new Set([]);
+    for (let ti = 0; ti < tileIdxs.length; ti++) {
+      const allowed = this.possibilities.filter((p) => TILES[p].allowLeft(tileIdxs[ti]));
+      newPossibilities = newPossibilities.union(new Set(allowed));
+    }
+    this.possibilities = Array.from(newPossibilities);
   }
 
-  updateFromTop(tileIdx) {
-    this.possibilities = this.possibilities.filter((p) => TILES[p].allowTop(tileIdx));
+  updateFromTop(tileIdxs) {
+    let newPossibilities = new Set([]);
+    for (let ti = 0; ti < tileIdxs.length; ti++) {
+      const allowed = this.possibilities.filter((p) => TILES[p].allowTop(tileIdxs[ti]));
+      newPossibilities = newPossibilities.union(new Set(allowed));
+    }
+    this.possibilities = Array.from(newPossibilities);
   }
 }

@@ -1,20 +1,20 @@
 class Tile {
-  constructor(draw, neighbors) {
+  constructor(draw, edges) {
     this.draw = draw;
-    this.neighbors = neighbors;
+    this.edges = edges;
   }
 
   allowRight(i) {
-    return this.neighbors[0].includes(i);
+    return this.edges[0] == TILES[i].edges[2];
   }
   allowBottom(i) {
-    return this.neighbors[1].includes(i);
+    return this.edges[1] == TILES[i].edges[3];
   }
   allowLeft(i) {
-    return this.neighbors[2].includes(i);
+    return this.edges[2] == TILES[i].edges[0];
   }
   allowTop(i) {
-    return this.neighbors[3].includes(i);
+    return this.edges[3] == TILES[i].edges[1];
   }
 }
 
@@ -37,12 +37,12 @@ function quarter(a) {
 }
 
 const TILES = [
-  new Tile(empty, [[0,3,4],[0,4,5],[0,2,5],[0,2,3]]),
-  new Tile(full, [[1,2,5],[1,2,3],[1,3,4],[1,4,5]]),
-  new Tile(quarter(0), [[0,3,4],[0,4,5],[1,3,4],[1,4,5]]),
-  new Tile(quarter(90), [[1,2,5],[0,4,5],[0,2,5],[1,4,5]]),
-  new Tile(quarter(180), [[1,2,5],[1,2,3],[0,2,5],[0,2,3]]),
-  new Tile(quarter(270), [[0,3,4],[1,2,3],[1,3,4],[0,2,3]]),
+  new Tile(empty, [0, 0, 0, 0]),
+  new Tile(full, [1, 1, 1, 1]),
+  new Tile(quarter(0), [0, 0, 1, 1]),
+  new Tile(quarter(90), [1, 0, 0, 1]),
+  new Tile(quarter(180), [1, 1, 0, 0]),
+  new Tile(quarter(270), [0, 1, 1, 0]),
 ];
 
 const ALL_TILE_IDXS = TILES.map((_, i) => i);

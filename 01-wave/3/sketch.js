@@ -61,14 +61,23 @@ function draw() {
 
   if (candidates.length > 0) {
     const candidate = candidates[0];
-    print("collapsing", toI(candidate.x, candidate.y));
-    collapse(grid[toI(candidate.x, candidate.y)]);
+    const candidateIdx = toI(candidate.x, candidate.y);
+    print("collapsing", candidateIdx);
+    collapse(grid[candidateIdx]);
+  } else {
+    noLoop();
   }
 
   for (let i = 0; i < grid.length; i++) {
     const mGridy = grid[i];
     let mTile = TILES[mGridy.possibilities[0]];
-    mTile.draw(mGridy.x, mGridy.y, GRID_SIZE);
+
+    // DEBUG
+    try {
+      mTile.draw(mGridy.x, mGridy.y, GRID_SIZE);
+    } catch {
+      print(i, mTile);
+    }
     text(i + ": " + mGridy.possibilities, mGridy.x, mGridy.y, GRID_SIZE, GRID_SIZE);
   }
 }

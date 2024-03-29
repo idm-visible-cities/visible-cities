@@ -1,7 +1,7 @@
 class Tile {
-  constructor(draw, neighbors) {
+  constructor(draw, edges) {
     this.draw = draw;
-    this.neighbors = neighbors;
+    this.edges = edges;
   }
 }
 
