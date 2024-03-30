@@ -4,9 +4,10 @@ const GRID_SIZE_Y = 4;
 function setup() {
   createCanvas(600, windowHeight);
   noLoop();
-  noiseDetail(4, 0.5);
-  stroke(0);
   noFill();
+  stroke(0);
+
+  noiseDetail(4, 0.5);
 }
 
 function draw() {
