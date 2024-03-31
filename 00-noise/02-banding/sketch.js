@@ -8,14 +8,23 @@ function setup() {
   noLoop();
   noStroke();
 
-  noiseDetail(2, 0.5);
+  noiseDetail(8, 0.5);
 
   COLORS = [
     color("navy"),
+    color("navy"),
+    color("royalblue"),
+    color("royalblue"),
+    color("royalblue"),
+    color("royalblue"),
     color("royalblue"),
     color("peachpuff"),
     color("saddlebrown"),
     color("forestgreen"),
+    color("forestgreen"),
+    color("forestgreen"),
+    color("darkgreen"),
+    color("darkgreen"),
     color("darkgreen"),
     color("darkgreen"),
   ];
@@ -26,7 +35,7 @@ function draw() {
 
   for (let y = 0; y < height; y+=GRID_SIZE) {
     for (let x = 0; x < width; x += GRID_SIZE) {
-      let noise_val = COLORS.length * noise(x / 150, y / 150)
+      let noise_val = COLORS.length * noise(x / 100, y / 100)
       let ci = floor(noise_val);
 
       let c0 = COLORS[ci];

@@ -5,7 +5,7 @@ function setup() {
   noLoop();
   noStroke();
 
-  noiseDetail(2, 0.5);
+  noiseDetail(6, 0.5);
 }
 
 function draw() {
@@ -14,6 +14,10 @@ function draw() {
   for (let y = 0; y < height; y+=GRID_SIZE) {
     for (let x = 0; x < width; x+=GRID_SIZE) {
       let c = 255 * noise(x / 100, y / 100);
+
+      // CHEAP BANDS !
+      // c = floor(c / 50) * 50;
+
       fill(c);
       rect(x, y, GRID_SIZE, GRID_SIZE);
     }
