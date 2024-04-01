@@ -3,7 +3,5 @@
 ---
 
 0. Noise
-1. Wave Collapse
-2. Evolutionary/Genetic Algorithm
-3. L-System
-4. Automata
+1. Wave Function Collapse
+2. L-System
