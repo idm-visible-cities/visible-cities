@@ -1,5 +1,3 @@
-// https://www.robertdickau.com/lsys2d.html
-
 let state;
 let stateIdx;
 let steps;

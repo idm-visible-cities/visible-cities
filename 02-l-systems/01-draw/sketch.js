@@ -1,5 +1,3 @@
-// https://www.robertdickau.com/lsys2d.html
-
 let state;
 let stateIdx;
 
@@ -27,22 +25,24 @@ function draw() {
     const mLetter = state[si];
     nState += RULES[mLetter] || mLetter;
   }
-  state = nState.slice(0, 2000);
+  if (nState.length < 2 ** 12 - 1) {
+    state = nState;
+  }
 
   let x = 0;
   let y = 0;
 
   for (let si = 0; si < state.length; si++) {
-    const symbol = state[si];
+    const mSymbol = state[si];
 
-    if (symbol == 'A') {
+    if (mSymbol == 'A') {
       line(x, y, x + LINELEN, y + LINELEN);
       y += DRAWSTEP;
-    } else if (symbol == 'B') {
+    } else if (mSymbol == 'B') {
       line(x, y, x + LINELEN, y + LINELEN);
       x += DRAWSTEP;
       y += DRAWSTEP;
-    } else if (symbol == 'C') {
+    } else if (mSymbol == 'C') {
       line(x, y, x - LINELEN, y + LINELEN);
       x -= DRAWSTEP;
       y += DRAWSTEP;
