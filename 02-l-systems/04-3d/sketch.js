@@ -1,6 +1,6 @@
 // https://www.robertdickau.com/lsys2d.html
 
-const STEP = 32;
+const STEP = 64;
 const ANGLE = 90;
 
 let state;
@@ -12,15 +12,16 @@ RULES = {
 };
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  noLoop();
-  noStroke();
+  createCanvas(windowWidth, windowHeight, WEBGL);
+  stroke(10);
   rectMode(CENTER);
   state = "A";
 }
 
 function draw() {
   background(250, 50, 150);
+  orbitControl();
+  translate(-width, -height);
 
   // UPDATE STATE
   let nState = "";
@@ -28,7 +29,7 @@ function draw() {
     const mLetter = state[si];
     nState += RULES[mLetter] || mLetter;
   }
-  if (nState.length < 2 ** 14 - 1) {
+  if (nState.length < 2 ** 13 - 1) {
     state = nState;
   }
 
@@ -52,22 +53,28 @@ function draw() {
     // DRAW
     const rWidth = STEP;
 
+    push();
     if (mSymbol == "A") {
       fill(20, 80, 20);
-      rect(x, y, rWidth);
+      let hh = 1;
+      translate(x, y, hh * rWidth);
+      box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "B") {
       fill(20);
-      rect(x, y, rWidth);
+      let hh = 1;
+      translate(x, y, hh * rWidth);
+      box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "C") {
       fill(50);
-      rect(x, y, rWidth);
+      let hh = 1;
+      translate(x, y, hh * rWidth);
+      box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "D") {
       fill(200);
-      rect(x, y, rWidth);
+      let hh = 1;
+      translate(x, y, hh * rWidth);
+      box(rWidth, rWidth, 2 * hh * rWidth);
     }
+    pop();
   }
-}
-
-function mouseClicked() {
-  redraw();
 }
