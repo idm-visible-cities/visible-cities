@@ -6,6 +6,8 @@ const ANGLE = 90;
 let state;
 let stateIdx;
 
+let fillAlpha = 255;
+
 RULES = {
   A: "+BDF-AFA-FBD+",
   B: "-ACF+BFB+FAC-",
@@ -55,26 +57,32 @@ function draw() {
 
     push();
     if (mSymbol == "A") {
-      fill(20, 80, 20);
+      fill(20, 80, 20, fillAlpha);
       let hh = 1;
       translate(x, y, hh * rWidth);
       box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "B") {
-      fill(20);
+      fill(20, fillAlpha);
       let hh = 1;
       translate(x, y, hh * rWidth);
       box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "C") {
-      fill(50);
+      fill(50, fillAlpha);
       let hh = 1;
       translate(x, y, hh * rWidth);
       box(rWidth, rWidth, 2 * hh * rWidth);
     } else if (mSymbol == "D") {
-      fill(200);
+      fill(200, fillAlpha);
       let hh = 1;
       translate(x, y, hh * rWidth);
       box(rWidth, rWidth, 2 * hh * rWidth);
     }
     pop();
+  }
+}
+
+function keyReleased() {
+  if (key == 'a' || key == 'A') {
+    fillAlpha = 255 - fillAlpha;
   }
 }
