@@ -21,7 +21,7 @@ class Tile {
 const IMAGES = [];
 
 function preload() {
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 18; i++) {
     const mi = loadImage(`imgs/${i}.jpg`);
     IMAGES.push(mi);
   }
@@ -133,6 +133,11 @@ const TILES = [
   new Tile(img(10), [1, 0, 0, 1]),
   new Tile(img(11), [0, 0, 0, 1]),
   new Tile(img(12), [0, 0, 1, 0]),
+  new Tile(img(13), [0, 1, 0, 0]),
+  new Tile(img(14), [1, 0, 0, 0]),
+  new Tile(img(15), [1, 0, 0, 1]),
+  new Tile(img(16), [0, 0, 1, 1]),
+  new Tile(img(17), [0, 0, 0, 1]),
 ];
 
 const ALL_TILE_IDXS = TILES.map((_, i) => i);
